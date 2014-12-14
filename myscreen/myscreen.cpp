@@ -19,7 +19,8 @@ MyScreen::MyScreen(QObject *parent) : QObject(parent)
      setDp(metrics.getField<float>("density"));
  #else
     setDpi(QGuiApplication::primaryScreen()->physicalDotsPerInch());
-    setDp(dpi()/120);
+    //setDp(dpi()/120);
+    setDp(QGuiApplication::primaryScreen()->devicePixelRatio());
  #endif
 }
 

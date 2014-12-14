@@ -1,5 +1,4 @@
 import QtQuick 2.0
-import QtGraphicalEffects 1.0
 import UIConstants 1.0
 
 Rectangle {
@@ -7,8 +6,8 @@ Rectangle {
     state: "hide"
     focus: state=="hide"?false:true
 
-    property int cardWidth: 400 * dp
-    property int cardHeight: 400 * dp
+    property int cardWidth: (parent.width-128*dp) < 400 * dp ? (parent.width-128*dp) : 400 * dp
+    property int cardHeight: (parent.height-128*dp) < 400 * dp ? (parent.height-128*dp) : 400 * dp
     property int animationDelay: 300
     property alias cardData: cardItem.data
 
