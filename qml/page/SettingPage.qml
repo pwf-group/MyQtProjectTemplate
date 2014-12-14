@@ -13,12 +13,16 @@ Item {
             anchors {
                 left: parent.left
                 right: parent.right
-                leftMargin: 10 * dp
-                rightMargin: 10 * dp
+                top: parent.top
+                margins: 10 * dp
             }
 
             SettingDisplayPage {
                 id: settingDisplayPage
+            }
+
+            SettingStoragePage {
+                id: settingStoragePage
             }
         }
     }

@@ -25,5 +25,8 @@
         <file>qml/page/FontAwesomeIcon.qml</file>
         <file>qml/page/SettingPage.qml</file>
         <file>qml/page/SettingDisplayPage.qml</file>
+        <file>qml/page/SettingStoragePage.qml</file>
+        <file>qml/page/SettingStorageStyle.qml</file>
+        <file>qml/page/SettingStorageSwitchStyle.qml</file>
     </qresource>
 </RCC>
