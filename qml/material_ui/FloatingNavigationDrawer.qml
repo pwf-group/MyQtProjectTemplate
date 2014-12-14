@@ -50,6 +50,7 @@ Rectangle {
         enabled: parent.state == "hide"? false:true
         onClicked: {
             parent.state = "hide"
+            stackView.focus = true
         }
     }
     color: mouseAreaBackground.enabled?"#55000000":"transparent"
