@@ -7,43 +7,43 @@ import "../material_ui" as MaterialUI
 Item {
    id: root
 
-   MaterialUI.Label {
-       anchors.centerIn: parent
-       text: "Home Page"
-   }
+//   MaterialUI.Label {
+//       anchors.centerIn: parent
+//       text: "Home Page"
+//   }
 
-//    Map {
-//        id: maps
-//        anchors.fill: parent
+    Map {
+        id: maps
+        anchors.fill: parent
 
-//        plugin: Plugin {
-//            id: plugin
-//            name: "osm"
-//        }
+        plugin: Plugin {
+            id: plugin
+            name: "osm"
+        }
 
-//        center: QtPositioning.coordinate(3.072215, 101.699243)
+        center: QtPositioning.coordinate(3.072215, 101.699243)
 
-//        gesture.enabled: true
+        gesture.enabled: true
 
-//         MapCircle {
-//             id: myPosition
-//             color: "yellow"
-//             radius: 2000
-//             opacity: 0.3
-//             center: QtPositioning.coordinate(3.072215, 101.699243)
-//         }
+         MapCircle {
+             id: myPosition
+             color: "yellow"
+             radius: 2000
+             opacity: 0.3
+             center: QtPositioning.coordinate(3.072215, 101.699243)
+         }
 
-//        Component.onCompleted: {
-//            console.log(plugin.availableServiceProviders)
-//            maps.zoomLevel = 16
-//        }
+        Component.onCompleted: {
+            console.log(plugin.availableServiceProviders)
+            maps.zoomLevel = 12
+        }
 
-//        Behavior on zoomLevel { NumberAnimation{duration: 400} }
-//        Behavior on center { CoordinateAnimation{duration: 400} }
-//    }
+        Behavior on zoomLevel { NumberAnimation{duration: 400} }
+        Behavior on center { CoordinateAnimation{duration: 400} }
+    }
 
-//    Text {
-//        anchors.top: parent.top
-//        text: maps.zoomLevel
-//    }
+    Text {
+        anchors.top: parent.top
+        text: maps.zoomLevel
+    }
 }

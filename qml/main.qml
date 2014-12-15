@@ -9,7 +9,7 @@ ApplicationWindow {
     height: 480
     visible: true
 
-    FontLoader{ source: "qrc:/qml/qml_bootstrap/fonts/fontawesome-webfont.ttf"}
+    FontLoader{ source: "qrc:/qml_bootstrap/fonts/fontawesome-webfont.ttf"}
 
     toolBar: MaterialUI.ActionBar {
         id: actionBar
@@ -48,7 +48,7 @@ ApplicationWindow {
     StackView {
         id: stackView
         anchors.fill: parent
-        initialItem: Qt.resolvedUrl("qrc:/qml/page/HomePage.qml")
+        initialItem: Qt.resolvedUrl("qrc:/page/HomePage.qml")
 
         focus: true
         Keys.onReleased:

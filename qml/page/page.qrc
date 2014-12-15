@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/page">
+        <file>HomePage.qml</file>
+        <file>NavigationDrawerPage.qml</file>
+        <file>NavigationDrawerStyle.qml</file>
+        <file>FontAwesomeIcon.qml</file>
+        <file>SettingPage.qml</file>
+        <file>SettingDisplayPage.qml</file>
+        <file>SettingStoragePage.qml</file>
+        <file>SettingStorageStyle.qml</file>
+        <file>SettingStorageSwitchStyle.qml</file>
+    </qresource>
+</RCC>

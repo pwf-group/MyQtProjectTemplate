@@ -1,0 +1,18 @@
+<RCC>
+    <qresource prefix="/material_ui">
+        <file>ActionBar.qml</file>
+        <file>Card.qml</file>
+        <file>Dialog.qml</file>
+        <file>FlatButton.qml</file>
+        <file>FloatingActionButton.qml</file>
+        <file>FloatingNavigationDrawer.qml</file>
+        <file>IconButton.qml</file>
+        <file>Label.qml</file>
+        <file>MenuBackIcon.qml</file>
+        <file>PaperRipple.qml</file>
+        <file>PaperShadow.qml</file>
+        <file>Popup.qml</file>
+        <file>RaisedButton.qml</file>
+        <file>SwipeRectangle.qml</file>
+    </qresource>
+</RCC>

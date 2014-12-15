@@ -25,7 +25,7 @@ Item {
 
     ListModel {
         id: itemModel
-        ListElement { text: "FontAwesomeIcon"; icon: "\uf18c"; path: "qrc:/qml/page/FontAwesomeIcon.qml" }
-        ListElement { text: "Setting"; icon: "\uf013"; path: "qrc:/qml/page/SettingPage.qml" }
+        ListElement { text: "FontAwesomeIcon"; icon: "\uf18c"; path: "qrc:/page/FontAwesomeIcon.qml" }
+        ListElement { text: "Setting"; icon: "\uf013"; path: "qrc:/page/SettingPage.qml" }
     }
 }

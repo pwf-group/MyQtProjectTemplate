@@ -13,8 +13,8 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("dp", myScreen.dp());
-    qmlRegisterSingletonType( QUrl("qrc:/qml/UIConstants.qml"), "UIConstants", 1, 0, "UIConstants" );
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+    qmlRegisterSingletonType( QUrl("qrc:/UIConstants.qml"), "UIConstants", 1, 0, "UIConstants" );
+    engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
     return app.exec();
 }
