@@ -4,15 +4,16 @@ This is my compilation of cookbook that I found useful, yet wanted to integrate 
 I try to keep things as modular and as orginal as the original author work. However, certain thing may changes to allow convenient and similiar behaviour throughout the project.
 
 ## My Add-On
-### add on to rschaing.material
+### add-on to rschaing.material
 1. FloatingNavigationDrawer
 2. SwipeRectangle
 
-### add on to brexis.qml-bootstrap
+### add-on to brexis.qml-bootstrap
 1. None, in fact, i removed most of them only interested with the FontAwesome and the Javascript he created. :D
 
-### add on screen dpi control
-1. I seriously lost where i got the source from, with a little custom modification to ready dpi from Native Android.
+### add-on screen dpi control
+1. Rename the module to MyScreen
+2. I seriously lost where i got the source from, with a little custom modification to ready dpi from Native Android.
 
 ### Qt example, convert into *.pri to use as use need it
 1. Qt Log File Position Source as MyPosition. 
