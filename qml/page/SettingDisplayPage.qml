@@ -45,10 +45,10 @@ MaterialUI.Card {
             MaterialUI.Label { text: qsTr("%1").arg(Screen.pixelDensity) }
         }
 
-        Row {
-            MaterialUI.Label { text: "Density-independent Pixels Ratio : "; font.bold: Font.DemiBold }
-            MaterialUI.Label { text: qsTr("%1").arg(Screen.devicePixelRatio) }
-        }
+//        Row {
+//            MaterialUI.Label { text: "Density-independent Pixels Ratio : "; font.bold: Font.DemiBold }
+//            MaterialUI.Label { text: qsTr("%1").arg(Screen.devicePixelRatio) }
+//        }
 
         Row {
             MaterialUI.Label { text: "App dp : "; font.bold: Font.DemiBold }

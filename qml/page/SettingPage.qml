@@ -24,6 +24,7 @@ Item {
             SettingStoragePage {
                 id: settingStoragePage
             }
+
         }
     }
 }

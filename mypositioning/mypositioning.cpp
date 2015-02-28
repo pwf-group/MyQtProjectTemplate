@@ -11,14 +11,16 @@
 //
 QGeoPositionInfoSource *pGeoPositionInfoSource = NULL;
 LogFilePositionSource  *pLogPositionInfoSource = NULL;
-bool                    bLocationCenter = false;
+
+MyPosition *MyPosition::instance_ = 0;
 
 MyPosition::MyPosition(QObject *parent) :
     QObject(parent)
 {
-    m_coordinate = QPointF(0,0);
+    m_coordinate = QGeoCoordinate(0,0);
     m_valid      = false;
     m_simulate   = true;
+    m_interval   = 3000;
 }
 
 MyPosition::~MyPosition()
@@ -38,20 +40,18 @@ void MyPosition::startPositioning()
         {
             pGeoPositionInfoSource = QGeoPositionInfoSource::createDefaultSource(0);
             if (pGeoPositionInfoSource) {
-                qDebug() << "connect positionUpdated...";
+                qDebug() << "connect position updated...";
                 connect(pGeoPositionInfoSource, SIGNAL(positionUpdated(QGeoPositionInfo)),
                         this, SLOT(PositioningUpdate(QGeoPositionInfo)));
                 connect(pGeoPositionInfoSource, SIGNAL(error(QGeoPositionInfoSource::Error)),
                         this, SLOT(PositioningError(QGeoPositionInfoSource::Error)));
 
                 qDebug() << "start position update...";
-                pGeoPositionInfoSource->setUpdateInterval(3000);
+                pGeoPositionInfoSource->setUpdateInterval(m_interval);
                 pGeoPositionInfoSource->startUpdates();
 
                 QGeoPositionInfo info = pGeoPositionInfoSource->lastKnownPosition();
-
-                QPointF pt(info.coordinate().longitude(), info.coordinate().latitude());
-                setCoordinate(pt);
+                setCoordinate(info.coordinate());
             }
         }
     }
@@ -61,25 +61,50 @@ void MyPosition::startPositioning()
         {
             pLogPositionInfoSource = new LogFilePositionSource;
 
-            qDebug() << "connect positionUpdated...";
+            qDebug() << "connect position updated...";
             connect(pLogPositionInfoSource, SIGNAL(positionUpdated(QGeoPositionInfo)),
                     this, SLOT(PositioningUpdate(QGeoPositionInfo)));
             connect(pLogPositionInfoSource, SIGNAL(error(QGeoPositionInfoSource::Error)),
                     this, SLOT(PositioningError(QGeoPositionInfoSource::Error)));
 
             qDebug() << "start position update using log file...";
-            pLogPositionInfoSource->setUpdateInterval(3000);
+            pLogPositionInfoSource->setUpdateInterval(m_interval);
             pLogPositionInfoSource->startUpdates();
 
             QGeoPositionInfo info = pLogPositionInfoSource->lastKnownPosition();
-
-            QPointF pt(info.coordinate().longitude(), info.coordinate().latitude());
-            setCoordinate(pt);
+            setCoordinate(info.coordinate());
         }
     }
 }
+void MyPosition::stopPositioning()
+{
+    if(m_simulate == false)
+    {
+        if(pGeoPositionInfoSource != NULL)
+        {
+            pGeoPositionInfoSource->stopUpdates();
 
-void MyPosition::setCoordinate(const QPointF &d)
+            qDebug() << "disconnect position updated...";
+            disconnect(this, SLOT(PositioningUpdate(QGeoPositionInfo)));
+            disconnect(this, SLOT(PositioningError(QGeoPositionInfoSource::Error)));
+        }
+    }
+    else
+    {
+        if(pLogPositionInfoSource != NULL)
+        {
+            pLogPositionInfoSource->stopUpdates();
+
+            qDebug() << "disconnect positionUpdated...";
+            disconnect(this, SLOT(PositioningUpdate(QGeoPositionInfo)));
+            disconnect(this, SLOT(PositioningError(QGeoPositionInfoSource::Error)));
+        }
+    }
+
+    setCoordinate(QGeoCoordinate(0,0));
+}
+
+void MyPosition::setCoordinate(const QGeoCoordinate &d)
 {
     if (m_coordinate == d)
         return;
@@ -87,7 +112,7 @@ void MyPosition::setCoordinate(const QPointF &d)
     m_coordinate = d;
     emit coordinateChanged();
 }
-QPointF MyPosition::coordinate() const
+QGeoCoordinate MyPosition::coordinate() const
 {
     return m_coordinate;
 }
@@ -110,12 +135,15 @@ void MyPosition::setSimulate(const bool &b)
     m_simulate = b;
 }
 
+void MyPosition::setInterval(const int &msec)
+{
+    m_interval = msec;
+}
+
 void MyPosition::PositioningUpdate(const QGeoPositionInfo &info)
 {
     //qDebug() << "Position updated:" << info;
-    QPointF pt(info.coordinate().longitude(), info.coordinate().latitude());
-
-    setCoordinate(pt);
+    setCoordinate(info.coordinate());
     setValid(info.isValid());
 }
 

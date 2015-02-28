@@ -3,7 +3,7 @@ import UIConstants 1.0
 
 Text {
     id: label
-    font.family: UIConstants.sansFontFamily
+    font.family: UIConstants.textFontFamily
     font.pointSize: UIConstants.bodyFontSize
     color: UIConstants.bodyTextColor
 }

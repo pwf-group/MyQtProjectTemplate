@@ -7,7 +7,7 @@ Item {
     height: 36 * dp
 
     property alias text: label.text
-    property color color: "white"
+    property color color: UIConstants.themeColor
     property alias textColor: label.color
     property alias rippleColor: ripple.color
 
@@ -30,11 +30,11 @@ Item {
     Text {
         id: label
         anchors.centerIn: parent
-        font.family: UIConstants.sansFontFamily
+        font.family: UIConstants.textFontFamily
         font.pointSize: UIConstants.bodyFontSize
         font.bold: Font.DemiBold
         font.capitalization: Font.AllUppercase
-        color: button.enabled ? UIConstants.bodyTextColor : UIConstants.displayTextColor
+        color: button.enabled ? UIConstants.themeTextColor : UIConstants.displayTextColor
         opacity: button.enabled ? 1 : 0.62
 
         Behavior on opacity {

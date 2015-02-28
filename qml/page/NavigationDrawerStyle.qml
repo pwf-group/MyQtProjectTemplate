@@ -12,8 +12,8 @@ Item {
     Rectangle{
         anchors.fill: parent
         color: "transparent"
-        border.width: 1 * dp
-        border.color: "#eeeeee"
+        //border.width: 1 * dp
+        //border.color: UIConstants.themeBorderColor
 
         MaterialUI.Label {
             font.family: "FontAwesome"
@@ -27,7 +27,7 @@ Item {
 
         MaterialUI.Label {
             id: content
-            font.family: UIConstants.sansFontFamily
+            font.family: UIConstants.textFontFamily
             font.pointSize: UIConstants.bodyFontSize
             font.bold: Font.DemiBold
             text: model.text

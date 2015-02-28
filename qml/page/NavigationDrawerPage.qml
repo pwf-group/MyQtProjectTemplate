@@ -15,17 +15,27 @@ Item {
         delegate: NavigationDrawerStyle {
             onItemClicked: {
                 //itemList.model.get(index).text = "Item clicked";
+                stackView.focus = true
                 if(itemList.model.get(index).path !== "" ) {
                     stackView.pop(null)
-                    stackView.push(Qt.resolvedUrl(itemList.model.get(index).path))
+
+                    if(index !== 0)
+                        stackView.push(Qt.resolvedUrl(itemList.model.get(index).path))
+
+                    navigationDrawer.toggle()
                 }
+                else if(itemList.count == index+1)
+                    Qt.quit()
             }
         }
     }
 
     ListModel {
         id: itemModel
-        ListElement { text: "FontAwesomeIcon"; icon: "\uf18c"; path: "qrc:/page/FontAwesomeIcon.qml" }
-        ListElement { text: "Setting"; icon: "\uf013"; path: "qrc:/page/SettingPage.qml" }
+        ListElement { text: "Home"; icon: "\uf041"; path: "qrc:/page/HomePage.qml" }
+        ListElement { text: "Settings"; icon: "\uf085"; path: "qrc:/page/SettingPage.qml" }
+        ListElement { text: "Icon"; icon: "\uf1dd"; path: "qrc:/page/FontAwesomeIcon.qml" }
+        ListElement { text: "Font"; icon: "\uf031"; path: "qrc:/page/FontFamilies.qml" }
+        ListElement { text: "Exit"; icon: "\uf08b"; path: "" }
     }
 }

@@ -2,6 +2,6 @@
     <qresource prefix="/qml_bootstrap">
         <file>fonts/fontawesome-webfont.ttf</file>
         <file>variables/fontawesome.js</file>
-        <file>mycomponent/ImagePathView.qml</file>
     </qresource>
+    <qresource prefix="/"/>
 </RCC>

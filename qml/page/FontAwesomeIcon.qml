@@ -1,4 +1,4 @@
-import QtQuick 2.4
+import QtQuick 2.3
 import QtQuick.Controls 1.3
 import UIConstants 1.0
 import "../material_ui" as MaterialUI
@@ -22,7 +22,8 @@ Item {
                 anchors.fill: parent
                 color: "transparent"
                 border.width: 1 * dp
-                border.color: "#cccccc"
+                border.color: UIConstants.themeBorderColor
+                //border.color: "#cccccc"
 
                 Label {
                     font.family: "FontAwesome"

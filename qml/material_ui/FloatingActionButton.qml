@@ -1,4 +1,5 @@
 import QtQuick 2.0
+import UIConstants 1.0
 
 Item {
     id: button
@@ -8,6 +9,7 @@ Item {
     property alias color: background.color
     property alias rippleColor: ripple.color
     property alias iconSource: icon.source
+    property alias label: label
 
     signal clicked
 
@@ -16,6 +18,7 @@ Item {
         anchors.fill: parent
         radius: 28 * dp
         visible: false
+        color: UIConstants.themeColor
     }
 
     PaperShadow {
@@ -38,6 +41,14 @@ Item {
         height: 24 * dp
         sourceSize.width: width
         sourceSize.height: height
+    }
+
+    Text {
+        id: label
+        anchors.centerIn: parent
+        font.family: UIConstants.iconFontFamily
+        font.pointSize: UIConstants.titleFontSize
+        color: UIConstants.themeTextColor
     }
 
     MouseArea {

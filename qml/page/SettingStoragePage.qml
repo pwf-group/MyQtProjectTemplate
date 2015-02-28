@@ -9,7 +9,7 @@ MaterialUI.Card {
 
     Column {
         id: displayList
-        spacing: 3 * dp
+        spacing: 15 * dp
         anchors {
             left: parent.left
             right: parent.right
@@ -30,29 +30,34 @@ MaterialUI.Card {
             color: UIConstants.themeColor
         }
 
-        SettingStorageStyle {
-            textDesc : "Offline route"
-            textSubDesc: "12 routes"
-        }
-
-        SettingStorageStyle {
-            textDesc : "Save point"
-            textSubDesc: "12 points"
-        }
-
-        SettingStorageStyle {
-            textDesc : "Offline bus/rail stop"
-            textSubDesc: "100 stops"
-        }
-
-        SettingStorageStyle {
-            textDesc : "Offline map cache"
-            textSubDesc: "56 MB offline tiles"
+        SettingStorageSwitchStyle {
+            textDesc : "Offline map enabled"
+            checked: settings.offlineMap
+            onCheckedChanged: {
+                settings.offlineMap = checked
+            }
         }
 
         SettingStorageSwitchStyle {
-            textDesc : "Offline map enabled"
-            checked: false
+            textDesc : "Map night mode"
+            checked: settings.nightMode
+            onCheckedChanged: {
+                settings.nightMode = checked
+            }
+        }
+
+        Rectangle {
+            width: parent.width
+            height: logoutBtn.height
+            MaterialUI.FlatButton {
+                id: logoutBtn
+                anchors.right: parent.right
+                text: "Logout"
+                onClicked: {
+                    settings.login = false
+                    app.logout()
+                }
+            }
         }
     }
 }

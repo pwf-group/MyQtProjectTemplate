@@ -22,7 +22,7 @@ Item {
     Text {
         id: label
         anchors.centerIn: parent
-        font.family: UIConstants.sansFontFamily
+        font.family: UIConstants.textFontFamily
         font.pointSize: UIConstants.bodyFontSize
         font.bold: Font.DemiBold
         font.capitalization: Font.AllUppercase

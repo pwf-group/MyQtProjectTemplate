@@ -30,7 +30,7 @@ Item {
         id: title
         x: 72 * dp
         anchors.verticalCenter: parent.verticalCenter
-        font.family: UIConstants.sansFontFamily
+        font.family: UIConstants.textFontFamily
         font.bold: Font.DemiBold
         font.pointSize: UIConstants.titleFontSize
         color: UIConstants.themeTextColor

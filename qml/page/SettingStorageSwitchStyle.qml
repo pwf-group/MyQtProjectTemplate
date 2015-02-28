@@ -16,9 +16,8 @@ Rectangle {
 
     Switch {
         id: switchItem
-        anchors {
-            right: parent.right
-            verticalCenter: textDesc.verticalCenter
-        }
+        checked: true
+        height: textDesc.height
+        anchors.right: parent.right
     }
 }
