@@ -23,7 +23,7 @@ ApplicationWindow {
     toolBar: MaterialUI.ActionBar {
         id: actionBar
         raised: true
-        text: "myQtTemplate"
+        text: "inlov"
         z: 2
         visible: false
 
