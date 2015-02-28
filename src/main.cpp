@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
 
     app.setOrganizationName("PW & Friend");
     app.setOrganizationDomain("waiwaibaka.com");
-    app.setApplicationName("myQtTemplate");
+    app.setApplicationName("InLov");
 
     theApp.start();
 
