@@ -40,12 +40,15 @@ public:
     void addSource(Attendance *attendance);
     void emptySource();
 
+    Q_INVOKABLE QStringList tableModel();
     Q_INVOKABLE void filterText(QString text);
     Q_INVOKABLE void filterTable(QString table);
 
 private:
     QList<Attendance*> m_attendanceList;
     QList<Attendance*> m_attendanceSource;
+
+    QStringList        m_tableModel;
 
 signals:
 

@@ -69,6 +69,9 @@ void AttendeesModel::addSource(Attendance *attendance)
 {
     add(attendance);
     m_attendanceSource.append(attendance);
+
+    if(m_tableModel.indexOf(QString("%1").arg(attendance->tableNumber)) == -1)
+        m_tableModel.append(QString("%1").arg(attendance->tableNumber));
 }
 
 void AttendeesModel::emptySource()
@@ -78,6 +81,11 @@ void AttendeesModel::emptySource()
     foreach(Attendance *attendance, m_attendanceSource)
         delete attendance;
     m_attendanceSource.clear();
+}
+
+QStringList AttendeesModel::tableModel()
+{
+    return m_tableModel;
 }
 
 void AttendeesModel::filterText(QString text)

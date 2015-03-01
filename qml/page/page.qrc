@@ -11,5 +11,7 @@
         <file>SettingStoragePage.qml</file>
         <file>SettingStorageSwitchStyle.qml</file>
         <file>SearchPage.qml</file>
+        <file>TablePage.qml</file>
+        <file>AttendanceDetailPage.qml</file>
     </qresource>
 </RCC>

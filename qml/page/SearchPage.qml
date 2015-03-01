@@ -42,6 +42,15 @@ Item {
         delegate: Column {
             MaterialUI.Label {
                 text: model.name
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        stackView.push("qrc:/page/AttendanceDetailPage.qml",
+                            {name: model.name,
+                             table: model.table,
+                             group: model.group})
+                    }
+                }
             }
 
             MaterialUI.Label {
