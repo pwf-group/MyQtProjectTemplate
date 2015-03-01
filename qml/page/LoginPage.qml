@@ -6,37 +6,16 @@ import "../material_ui" as MaterialUI
 
 Item {
     id: login
-    property string login_passed: ""
-    property alias username: username_value.text
-    property alias pwd : password_value.text
-    property alias error_message: error_msg.text
 
     Column {
         anchors.centerIn: parent
         spacing: 10 * dp
 
         TextField {
-            id: username_value
+            id: secret_code_Value
             width: login.width>428*dp?300*dp:login.width*0.7
             font.pointSize: UIConstants.subheadFontSize
-            onTextChanged: error_msg.text = "";
-            placeholderText: "Username"
-
-            Keys.onReleased: {
-                if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
-                    event.accepted = true
-                    stackView.focus = true
-                }
-            }
-        }
-
-        TextField {
-            id: password_value
-            width: login.width>428*dp?300*dp:login.width*0.7
-            font.pointSize: UIConstants.subheadFontSize
-            echoMode: TextInput.Password
-            onTextChanged: error_msg.text = "";
-            placeholderText: "Password"
+            placeholderText: "Secret Code"
 
             Keys.onReleased: {
                 if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
@@ -56,6 +35,7 @@ Item {
                 rippleColor: UIConstants.themeBorderColor
                 onClicked: {
                     settings.login = true
+                    settings.secretCode = secret_code_Value.text
                     app.login()
                 }
             }
@@ -65,13 +45,6 @@ Item {
                 textColor: UIConstants.themeTextColor
                 rippleColor: UIConstants.themeBorderColor
                 onClicked: Qt.quit()
-            }
-        }
-        Row {
-            spacing: 5 * dp
-            MaterialUI.Label {
-                id: error_msg
-                color: "red"
             }
         }
     }

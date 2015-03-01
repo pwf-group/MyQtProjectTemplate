@@ -22,8 +22,6 @@ public:
 
     void start();
 
-    Q_INVOKABLE bool removeFile(QString file);
-
 signals:
 
 public slots:

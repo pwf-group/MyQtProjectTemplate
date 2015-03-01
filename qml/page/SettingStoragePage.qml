@@ -30,22 +30,6 @@ MaterialUI.Card {
             color: UIConstants.themeColor
         }
 
-        SettingStorageSwitchStyle {
-            textDesc : "Offline map enabled"
-            checked: settings.offlineMap
-            onCheckedChanged: {
-                settings.offlineMap = checked
-            }
-        }
-
-        SettingStorageSwitchStyle {
-            textDesc : "Map night mode"
-            checked: settings.nightMode
-            onCheckedChanged: {
-                settings.nightMode = checked
-            }
-        }
-
         Rectangle {
             width: parent.width
             height: logoutBtn.height

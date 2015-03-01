@@ -18,6 +18,7 @@ ApplicationWindow {
     Settings {
         id: settings
         property bool login: false
+        property string secretCode: ""
     }
 
     toolBar: MaterialUI.ActionBar {
@@ -72,7 +73,7 @@ ApplicationWindow {
                     stackView.pop();
                     event.accepted = true;
                 }
-                else {
+                else if(settings.login) {
                     navigationDrawer.toggle()
                     event.accepted = true;
                 }
