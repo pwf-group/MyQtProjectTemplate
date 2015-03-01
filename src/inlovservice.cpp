@@ -1,4 +1,5 @@
 #include "inlovservice.h"
+#include "eventdetails.h"
 #include "myapplication.h"
 
 #include <QtQml>
@@ -23,7 +24,9 @@ inlovService::inlovService(QObject *parent) : QObject(parent),
     m_currentReply(NULL),
     m_loadBusy(false)
 {
-
+    // chain of command for serviceLoader()
+    connect(this,SIGNAL(readSecretCodeFinished()),this,SLOT(serviceLoaderEventLink()));
+    connect(this,SIGNAL(readEventLinkFinished()),this,SLOT(serviceLoaderAttendees()));
 }
 
 inlovService::~inlovService()
@@ -76,6 +79,22 @@ void inlovService::setSecretCode(QString text)
     emit secretCodeChanged();
 }
 
+void inlovService::serviceLogin(QString secretCode)
+{
+    setSecretCode(secretCode);
+    QTimer::singleShot(0,this,SLOT(serviceLoader()));
+}
+
+QObject* inlovService::eventDetails()
+{
+    return &m_eventDetails;
+}
+
+QObject* inlovService::attendeesModel()
+{
+    return &m_attendeesModel;
+}
+
 bool inlovService::isFileExist(QString filename)
 {
     QFile Fout;
@@ -121,14 +140,38 @@ void inlovService::cancelLoad()
 
 }
 
-void inlovService::serviceLogin(QString secretCode)
+void inlovService::serviceLoader()
 {
-    setSecretCode(secretCode);
+    serviceLoaderSecretCode();
 }
 
-void inlovService::loadSecretCode(QString secretCode)
+void inlovService::serviceLoaderSecretCode()
 {
-    QNetworkRequest request(QUrl(QString("https://inlov.firebaseio.com/dev/code/%1.json").arg(secretCode)));
+    if(isFileExist(secretCode() + ".json"))
+        QTimer::singleShot(0,this,SLOT(readSecretCodeFile()));
+    else
+        QTimer::singleShot(0,this,SLOT(loadSecretCode()));
+}
+
+void inlovService::serviceLoaderEventLink()
+{
+    if(isFileExist(secretCode() + "_event.json"))
+        QTimer::singleShot(0,this,SLOT(readEventLinkFile()));
+    else
+        QTimer::singleShot(0,this,SLOT(loadEventLink()));
+}
+
+void inlovService::serviceLoaderAttendees()
+{
+    if(isFileExist(secretCode() + "_attendees.json"))
+        QTimer::singleShot(0,this,SLOT(readAttendeesFile()));
+    else
+        QTimer::singleShot(0,this,SLOT(loadAttendees()));
+}
+
+void inlovService::loadSecretCode()
+{
+    QNetworkRequest request(QUrl(QString("https://inlov.firebaseio.com/dev/code/%1.json").arg(secretCode())));
 
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
@@ -146,6 +189,7 @@ void inlovService::secretCodeFinishLoaded()
         //qDebug() << QString::fromUtf8(reply_json);
 
         writeFile(secretCode() + ".json", QString::fromUtf8(reply_json));
+        QTimer::singleShot(0,this,SLOT(readSecretCodeFile()));
     }
     else
     {
@@ -167,15 +211,17 @@ void inlovService::readSecretCodeFile()
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
     QJsonObject jsonRootObj = jsonDoc.object();
 
-    QString eventId = jsonRootObj.value("eventId").toString();
-    QString eventLink = jsonRootObj.value("eventLink").toString();
-    setTextDebug("eventId: " + eventId +
-                 "\neventLink: " + eventLink);
+    m_eventId = jsonRootObj.value("eventId").toString();
+    m_eventLink = jsonRootObj.value("eventLink").toString();
+    setTextDebug("eventId: " + m_eventId +
+                 "\neventLink: " + m_eventLink);
+
+    emit readSecretCodeFinished();
 }
 
-void inlovService::loadEventLink(QString eventLinkPath)
+void inlovService::loadEventLink()
 {
-    QNetworkRequest request(QUrl(QString("https://inlov.firebaseio.com/dev%1.json").arg(eventLinkPath)));
+    QNetworkRequest request(QUrl(QString("https://inlov.firebaseio.com/dev%1.json").arg(m_eventLink)));
 
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
@@ -205,7 +251,7 @@ void inlovService::eventLinkFinishLoaded()
     setLoadBusy(false);
 }
 
-void inlovService::readEvenLinkFile()
+void inlovService::readEventLinkFile()
 {
     QString data = readFile(secretCode() + "_event.json");
     if(data.isEmpty())
@@ -219,15 +265,22 @@ void inlovService::readEvenLinkFile()
     bool isPublished = jsonRootObj.value("isPublished").toBool();
     QString venue = jsonRootObj.value("venue").toString();
 
+    m_eventDetails.setDescription(description);
+    m_eventDetails.setEventName(eventName);
+    m_eventDetails.setIsPublished(isPublished);
+    m_eventDetails.setVenue(venue);
+
     setTextDebug("description: " + description +
                  "\neventName: " + eventName +
                  "\nvenue: " + venue +
                  "\nisPublished: " + QString("%1").arg(isPublished));
+
+    emit readEventLinkFinished();
 }
 
-void inlovService::loadAttendees(QString eventId)
+void inlovService::loadAttendees()
 {
-    QNetworkRequest request(QUrl(QString("https://inlov.firebaseio.com/dev/attendees/%1.json").arg(eventId)));
+    QNetworkRequest request(QUrl(QString("https://inlov.firebaseio.com/dev/attendees/%1.json").arg(m_eventId)));
 
     request.setSslConfiguration(QSslConfiguration::defaultConfiguration());
     request.setAttribute(QNetworkRequest::HttpPipeliningAllowedAttribute, true);
@@ -259,7 +312,7 @@ void inlovService::attendeesFinishLoaded()
 
 void inlovService::readAttendeesFile()
 {
-    QString data = readFile(secretCode() + "_event.json");
+    QString data = readFile(secretCode() + "_attendees.json");
     if(data.isEmpty())
         return;
 
@@ -267,21 +320,27 @@ void inlovService::readAttendeesFile()
     QJsonObject jsonObject = jsonResponse.object();
 
     setTextDebug("");
+    m_attendeesModel.empty();
+
     foreach(QString key, jsonObject.keys())
     {
         QJsonObject details = jsonObject.value(key).toObject();
 
-        QString name = details.value("name").toString();
-        int tableNumber = details.value("tableNumber").toInt();
-        int numberOfPax = details.value("numberOfPax").toInt();
-        QString group = details.value("group").toString();
-        QString chineseName = details.value("chineseName").toString();
+        Attendance *attendance = new Attendance;
+        attendance->name = details.value("name").toString();
+        attendance->tableNumber = details.value("tableNumber").toInt();
+        attendance->numberOfPax = details.value("numberOfPax").toInt();
+        attendance->group = details.value("group").toString();
+        attendance->chineseName = details.value("chineseName").toString();
+        m_attendeesModel.addSource(attendance);
 
-        setTextDebug(m_textDebug +
-                     "\nname: " + name +
-                     "\ntableNumber: " + QString("%1").arg(tableNumber) +
-                     "\nnumberOfPax: " + QString("%1").arg(numberOfPax) +
-                     "\ngroup: " + group +
-                     "\nchineseName: " + chineseName );
+//        setTextDebug(m_textDebug +
+//                     "\nname: " + name +
+//                     "\ntableNumber: " + QString("%1").arg(tableNumber) +
+//                     "\nnumberOfPax: " + QString("%1").arg(numberOfPax) +
+//                     "\ngroup: " + group +
+//                     "\nchineseName: " + chineseName );
     }
+
+    emit readAttendeesFinished();
 }

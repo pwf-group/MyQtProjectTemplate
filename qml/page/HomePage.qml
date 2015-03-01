@@ -5,11 +5,33 @@ import "../material_ui" as MaterialUI
 Item {
    id: root
 
-   MaterialUI.Label {
+   Column {
+       anchors.centerIn: parent
+       spacing: 10 * dp
+       MaterialUI.Label {
+           text: InLovService.eventDetails().eventName
+       }
+       MaterialUI.Label {
+           text: InLovService.eventDetails().description
+       }
+       MaterialUI.Label {
+           text: InLovService.eventDetails().venue
+       }
+   }
+
+   ListView {
        anchors.fill: parent
-       anchors.margins: 10 * dp
-       wrapMode: Text.WrapAnywhere
-       text: InLovService.textDebug
+       spacing: 10 * dp
+       model: InLovService.attendeesModel()
+       delegate: Column {
+           MaterialUI.Label {
+               text: model.name
+           }
+
+           MaterialUI.Label {
+               text: model.group
+           }
+       }
    }
 
    Column {
@@ -18,17 +40,12 @@ Item {
        MaterialUI.RaisedButton {
            enabled: !InLovService.loadBusy
            text: "PYL3ID"
-           onClicked: InLovService.loadSecretCode("PYL3ID")
+           //onClicked: InLovService.loadSecretCode("PYL3ID")
+           onClicked: InLovService.serviceLogin("PYL3ID")
        }
-       MaterialUI.RaisedButton {
-           enabled: !InLovService.loadBusy
-           text: "eventLink"
-           onClicked: InLovService.loadEventLink("/weddings/-Jiqai32ieu30uN-EmKk/events/-JiI8Iud0b-fGV1e_R91")
-       }
-       MaterialUI.RaisedButton {
-           enabled: !InLovService.loadBusy
-           text: "Attendees"
-           onClicked: InLovService.loadAttendees("-JiI8Iud0b-fGV1e_R91")
+
+       MaterialUI.Label {
+           text: InLovService.eventDetails().eventName
        }
    }
 }

@@ -1,6 +1,9 @@
 #ifndef INLOVSERVICE_H
 #define INLOVSERVICE_H
 
+#include "eventdetails.h"
+#include "attendeesmodel.h"
+
 #include <QObject>
 #include <QNetworkAccessManager>
 
@@ -26,6 +29,10 @@ public:
     QString secretCode() const;
     void setSecretCode(QString text);
 
+    Q_INVOKABLE void serviceLogin(QString secretCode);
+    Q_INVOKABLE QObject* eventDetails();
+    Q_INVOKABLE QObject* attendeesModel();
+
     Q_INVOKABLE bool isFileExist(QString filename);
     Q_INVOKABLE void writeFile(QString filename, QString text);
     Q_INVOKABLE bool removeFile(QString filename);
@@ -37,29 +44,44 @@ private:
     QNetworkAccessManager *m_networkAccessManager;
     QNetworkReply *m_currentReply;
 
+    // QML binding property
     QString m_textDebug;
     bool m_loadBusy;
     QString m_secretCode;
+
+    // Service private usage property
+    QString m_eventId;
+    QString m_eventLink;
+
+    EventDetails m_eventDetails;
+    AttendeesModel m_attendeesModel;
 
 signals:
     void textDebugChanged();
     void loadBusyChanged();
     void secretCodeChanged();
 
+    void readSecretCodeFinished();
+    void readEventLinkFinished();
+    void readAttendeesFinished();
+
 public slots:
     void cancelLoad();
 
-    void serviceLogin(QString secretCode);
+    void serviceLoader();
+    void serviceLoaderSecretCode();
+    void serviceLoaderEventLink();
+    void serviceLoaderAttendees();
 
-    void loadSecretCode(QString secretCode);
+    void loadSecretCode();
     void secretCodeFinishLoaded();
     void readSecretCodeFile();
 
-    void loadEventLink(QString eventLinkPath);
+    void loadEventLink();
     void eventLinkFinishLoaded();
-    void readEvenLinkFile();
+    void readEventLinkFile();
 
-    void loadAttendees(QString eventId);
+    void loadAttendees();
     void attendeesFinishLoaded();
     void readAttendeesFile();
 };

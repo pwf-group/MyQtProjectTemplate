@@ -7,13 +7,15 @@ ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android-sources
 HEADERS += \
     src/myapplication.h \
     src/inlovservice.h \
-    src/eventdetails.h
+    src/eventdetails.h \
+    src/attendeesmodel.h
 	
 SOURCES += \
     src/main.cpp \
     src/myapplication.cpp \
     src/inlovservice.cpp \
-    src/eventdetails.cpp
+    src/eventdetails.cpp \
+    src/attendeesmodel.cpp
 
 RESOURCES += \
     qml/qml.qrc \

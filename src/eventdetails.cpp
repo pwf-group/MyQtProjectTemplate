@@ -1,8 +1,9 @@
 #include "eventdetails.h"
+#include <QQmlEngine>
 
 EventDetails::EventDetails(QObject *parent) : QObject(parent)
 {
-
+    QQmlEngine::setObjectOwnership(this,QQmlEngine::CppOwnership);
 }
 
 EventDetails::~EventDetails()
