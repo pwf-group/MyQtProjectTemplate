@@ -2,6 +2,7 @@ import QtQuick 2.3
 import QtQuick.Controls 1.2
 import Qt.labs.settings 1.0
 import UIConstants 1.0
+import inlov.api 1.0
 import "material_ui" as MaterialUI
 import "mycomponent" as MyComponent
 import "page" as Page
@@ -18,7 +19,7 @@ ApplicationWindow {
     Settings {
         id: settings
         property bool login: false
-        property string secretCode: ""
+        property string secretCode: "" // "PYL3ID"
     }
 
     toolBar: MaterialUI.ActionBar {
@@ -119,6 +120,9 @@ ApplicationWindow {
         actionBar.visible = true
         stackView.focus = true
         stackView.clear()
+
+        InLovService.serviceLogin(settings.secretCode)
+
         stackView.push(Qt.resolvedUrl("qrc:/page/HomePage.qml"))
     }
     function logout() {

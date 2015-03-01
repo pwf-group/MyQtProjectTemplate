@@ -10,5 +10,6 @@
         <file>SettingDisplayPage.qml</file>
         <file>SettingStoragePage.qml</file>
         <file>SettingStorageSwitchStyle.qml</file>
+        <file>SearchPage.qml</file>
     </qresource>
 </RCC>

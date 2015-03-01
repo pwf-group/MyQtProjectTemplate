@@ -33,9 +33,11 @@ Item {
     ListModel {
         id: itemModel
         ListElement { text: "Home"; icon: "\uf041"; path: "qrc:/page/HomePage.qml" }
+        ListElement { text: "Search"; icon: "\uf002"; path: "qrc:/page/SearchPage.qml" }
+        ListElement { text: "Table"; icon: "\uf0b0"; path: "qrc:/page/TablePage.qml" }
         ListElement { text: "Settings"; icon: "\uf085"; path: "qrc:/page/SettingPage.qml" }
-        ListElement { text: "Icon"; icon: "\uf1dd"; path: "qrc:/page/FontAwesomeIcon.qml" }
-        ListElement { text: "Font"; icon: "\uf031"; path: "qrc:/page/FontFamilies.qml" }
+        //ListElement { text: "Icon"; icon: "\uf1dd"; path: "qrc:/page/FontAwesomeIcon.qml" }
+        //ListElement { text: "Font"; icon: "\uf031"; path: "qrc:/page/FontFamilies.qml" }
         ListElement { text: "Exit"; icon: "\uf08b"; path: "" }
     }
 }

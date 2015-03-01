@@ -18,34 +18,4 @@ Item {
            text: InLovService.eventDetails().venue
        }
    }
-
-   ListView {
-       anchors.fill: parent
-       spacing: 10 * dp
-       model: InLovService.attendeesModel()
-       delegate: Column {
-           MaterialUI.Label {
-               text: model.name
-           }
-
-           MaterialUI.Label {
-               text: model.group
-           }
-       }
-   }
-
-   Column {
-       spacing: 10 * dp
-       anchors.centerIn: parent
-       MaterialUI.RaisedButton {
-           enabled: !InLovService.loadBusy
-           text: "PYL3ID"
-           //onClicked: InLovService.loadSecretCode("PYL3ID")
-           onClicked: InLovService.serviceLogin("PYL3ID")
-       }
-
-       MaterialUI.Label {
-           text: InLovService.eventDetails().eventName
-       }
-   }
 }

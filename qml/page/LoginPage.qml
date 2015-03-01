@@ -16,6 +16,7 @@ Item {
             width: login.width>428*dp?300*dp:login.width*0.7
             font.pointSize: UIConstants.subheadFontSize
             placeholderText: "Secret Code"
+            text: "PYL3ID"
 
             Keys.onReleased: {
                 if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape) {
